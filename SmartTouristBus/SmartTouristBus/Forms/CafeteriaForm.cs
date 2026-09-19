@@ -5,7 +5,8 @@ using SmartTouristBus.UI;
 namespace SmartTouristBus.Forms;
 
 public sealed class CafeteriaForm : AppFormBase
-{
+{//ftiakse ena pedio _orders typou orderservice kai kane to na deixnei sto instance.
+
     private readonly OrderService _orders = OrderService.Instance;
     private readonly SimulationEngine _engine = SimulationEngine.Instance;
     private readonly ListBox _orderList = new();
@@ -17,8 +18,21 @@ public sealed class CafeteriaForm : AppFormBase
 
     public CafeteriaForm() : base("Συνεργαζόμενη Καφετέρια — Smart Tourist Bus")
     {
-        var header = new Panel { Dock = DockStyle.Top, Height = 82, BackColor = Theme.Gold, Padding = new Padding(24, 12, 18, 10) };
-        header.Controls.Add(new Label { Text = "Κονσόλα παραγγελιών καφετέριας", Dock = DockStyle.Fill, ForeColor = Theme.Navy, Font = Theme.TitleFont, TextAlign = ContentAlignment.MiddleLeft });
+        var header = new Panel { 
+            Dock = DockStyle.Top, 
+            Height = 82, 
+            BackColor = Theme.Gold, 
+            Padding = new Padding(24, 12, 18, 10) 
+        };
+        header.Controls.Add(
+            new Label { 
+                Text = "Κονσόλα παραγγελιών καφετέριας", 
+                Dock = DockStyle.Fill, 
+                ForeColor = Theme.Navy, 
+                Font = Theme.TitleFont, 
+                TextAlign = ContentAlignment.MiddleLeft 
+            }
+         );
 
         var root = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 2, Padding = new Padding(14) };
         root.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40));
@@ -35,7 +49,8 @@ public sealed class CafeteriaForm : AppFormBase
         {
             _orders.OrderPlaced -= OrdersOnChanged;
             _orders.OrderChanged -= OrdersOnChanged;
-        };
+        }; //ta kanw unsubscribe otan kleisei, gia na min sinexisei na akouei ena kleisto parathrio
+        
         RefreshOrders();
     }
 
